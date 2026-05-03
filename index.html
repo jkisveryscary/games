@@ -350,11 +350,8 @@ document.getElementById("search").addEventListener("input", e => {
 document.querySelectorAll(".game").forEach(tile => {
   tile.addEventListener("click", () => {
     const name = tile.querySelector("div")?.innerText || "Unknown Game";
-    const imgRaw = tile.querySelector("img")?.getAttribute("src") || "";
+    const img = tile.querySelector("img")?.getAttribute("src") || "";
     const link = tile.getAttribute("href");
-
-    // FIX: force absolute path so recents page works anywhere
-    const img = new URL(imgRaw, window.location.origin + "/").href;
 
     let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
 
