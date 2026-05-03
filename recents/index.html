@@ -4,39 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recents · CARSON SMP GAMES</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
-<!-- TOP BAR (NO SEARCH) -->
 <div class="topbar">
-
   <div class="left">
     <div class="logo">CARSON SMP GAMES</div>
 
     <div class="nav">
-      <a href="https://pleasedropkickme.github.io/games/">HOME</a>
-      <a href="https://pleasedropkickme.github.io/games/recents/">RECENTS</a>
-      <a href="../updates/index.html">UPDATES</a>
+      <a href="/games/">HOME</a>
+      <a href="/games/recents/">RECENTS</a>
+      <a href="/games/updates/">UPDATES</a>
     </div>
-
   </div>
-
 </div>
 
-<!-- TITLE -->
 <div class="section-title">Recently Played</div>
 
-<!-- RECENTS GRID -->
 <div class="grid" id="recentsGrid"></div>
 
 <script>
 
-/* LOAD RECENTS */
 let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
-
-// keep last 12, newest first
 recents = recents.slice(-12).reverse();
 
 const grid = document.getElementById("recentsGrid");
@@ -45,13 +36,18 @@ if (recents.length === 0) {
   grid.innerHTML = "<div style='padding:20px; opacity:0.7;'>No recent games yet.</div>";
 } else {
   recents.forEach(game => {
+
     const a = document.createElement("a");
     a.className = "game";
-    a.href = game.link;
 
-    // FIX: no path guessing, just use stored value directly
+    // FORCE ROOT PATHS
+    const link = game.link.startsWith("/") ? game.link : "/games/" + game.link;
+    const img = game.img.startsWith("/") ? game.img : "/games/" + game.img;
+
+    a.href = link;
+
     a.innerHTML = `
-      <img src="${game.img}">
+      <img src="${img}">
       <div>${game.name}</div>
     `;
 
