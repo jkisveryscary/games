@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Site not found · GitHub Pages</title>
+<title>Recents · CARSON SMP GAMES</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,7 +17,7 @@
 
     <div class="nav">
       <a href="https://pleasedropkickme.github.io/games/">HOME</a>
-      <a href="https://pleasedropkickme.github.io/games/recents/index.html/">RECENTS</a>
+      <a href="https://pleasedropkickme.github.io/games/recents/">RECENTS</a>
       <a href="../updates/index.html">UPDATES</a>
     </div>
 
@@ -41,17 +41,6 @@ recents = recents.slice(-12).reverse();
 
 const grid = document.getElementById("recentsGrid");
 
-/* FIX PATHS FOR /recents/ FOLDER */
-function fixPath(path) {
-  if (!path) return "";
-
-  // already absolute URL
-  if (path.startsWith("http")) return path;
-
-  // fix relative path (go back to main folder)
-  return "../" + path;
-}
-
 if (recents.length === 0) {
   grid.innerHTML = "<div style='padding:20px; opacity:0.7;'>No recent games yet.</div>";
 } else {
@@ -60,8 +49,9 @@ if (recents.length === 0) {
     a.className = "game";
     a.href = game.link;
 
+    // FIX: no path guessing, just use stored value directly
     a.innerHTML = `
-      <img src="${fixPath(game.img)}">
+      <img src="${game.img}">
       <div>${game.name}</div>
     `;
 
