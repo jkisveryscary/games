@@ -350,18 +350,18 @@ document.getElementById("search").addEventListener("input", e => {
 document.querySelectorAll(".game").forEach(tile => {
   tile.addEventListener("click", () => {
     const name = tile.querySelector("div")?.innerText || "Unknown Game";
-    const img = tile.querySelector("img")?.getAttribute("src") || "";
+    const imgRaw = tile.querySelector("img")?.getAttribute("src") || "";
     const link = tile.getAttribute("href");
+
+    // FIX: force absolute path so recents page works anywhere
+    const img = new URL(imgRaw, window.location.origin + "/").href;
 
     let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
 
-    // remove duplicates
     recents = recents.filter(g => g.link !== link);
 
-    // add newest
     recents.push({ name, link, img });
 
-    // keep only last 12
     if (recents.length > 12) {
       recents = recents.slice(recents.length - 12);
     }
