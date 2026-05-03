@@ -16,9 +16,9 @@
     <div class="logo">CARSON SMP GAMES</div>
 
     <div class="nav">
-      <a href="https://pleasedropkickme.github.io/games/">HOME</a>
-      <a href="https://pleasedropkickme.github.io/games/recents/index.html">RECENTS</a>
-      <a href="https://pleasedropkickme.github.io/games/updates/index.html">UPDATES</a>
+      <a href="https://pleasedropkickme.github.io/gamesold/">OLD WEBSITE</a>
+      <a href="../index.html">HOME</a>
+      <a href="../updates/index.html">UPDATES (NOT DONE)</a>
     </div>
 
   </div>
@@ -32,19 +32,25 @@
 <div class="grid" id="recentsGrid"></div>
 
 <script>
-/*
-EXPECTED FORMAT IN LOCALSTORAGE:
-recentGames = [
-  { name: "Poly Track", link: "play.html?g=polytrack", img: "../assets/polytrack.png" }
-]
-*/
+
+/* LOAD RECENTS */
+let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
+
+// keep last 12, newest first
+recents = recents.slice(-12).reverse();
 
 const grid = document.getElementById("recentsGrid");
 
-let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
+/* FIX PATHS FOR /recents/ FOLDER */
+function fixPath(path) {
+  if (!path) return "";
 
-// keep only last 12
-recents = recents.slice(-12).reverse();
+  // already absolute URL
+  if (path.startsWith("http")) return path;
+
+  // fix relative path (go back to main folder)
+  return "../" + path;
+}
 
 if (recents.length === 0) {
   grid.innerHTML = "<div style='padding:20px; opacity:0.7;'>No recent games yet.</div>";
@@ -55,13 +61,14 @@ if (recents.length === 0) {
     a.href = game.link;
 
     a.innerHTML = `
-      <img src="${game.img}">
+      <img src="${fixPath(game.img)}">
       <div>${game.name}</div>
     `;
 
     grid.appendChild(a);
   });
 }
+
 </script>
 
 </body>
