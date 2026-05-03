@@ -359,14 +359,11 @@ document.querySelectorAll(".game").forEach(tile => {
 
     recents.push({ name, link, img });
 
-    if (recents.length > 12) {
-      recents = recents.slice(recents.length - 12);
-    }
+    if (recents.length > 12) recents = recents.slice(-12);
 
     localStorage.setItem("recentGames", JSON.stringify(recents));
   });
 });
-
 
 /* CAROUSEL */
 let i = 0;
