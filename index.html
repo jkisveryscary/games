@@ -316,32 +316,25 @@
 <script>
 
 /* SEARCH (NO data-name, stays on page) */
-document.getElementById("search").addEventListener("input", e => {
-  const val = e.target.value.toLowerCase().trim();
+document.querySelectorAll(".game").forEach(tile => {
+  tile.addEventListener("click", () => {
+    const name = tile.querySelector("div")?.innerText || "Unknown Game";
+    const img = tile.querySelector("img")?.getAttribute("src") || "";
+    const link = tile.getAttribute("href");
 
-  const carousel = document.getElementById("carousel");
-  const featuredTitle = document.getElementById("featured");
-  const featuredGrid = document.querySelector("#featured + .grid");
+    let recents = JSON.parse(localStorage.getItem("recentGames")) || [];
 
-  const allGamesSection = document.querySelector("#games + .grid");
-  const games = allGamesSection.querySelectorAll(".game");
+    recents = recents.filter(g => g.link !== link);
 
-  if (val === "") {
-    carousel.style.display = "block";
-    featuredTitle.style.display = "block";
-    featuredGrid.style.display = "grid";
+    recents.push({
+      name,
+      link,
+      img: img.replace(/^\.?\//, "") // normalizes path
+    });
 
-    games.forEach(g => g.style.display = "block");
-    return;
-  }
+    if (recents.length > 12) recents = recents.slice(-12);
 
-  carousel.style.display = "none";
-  featuredTitle.style.display = "none";
-  featuredGrid.style.display = "none";
-
-  games.forEach(g => {
-    const name = g.querySelector("div").innerText.toLowerCase();
-    g.style.display = name.includes(val) ? "block" : "none";
+    localStorage.setItem("recentGames", JSON.stringify(recents));
   });
 });
 
@@ -365,6 +358,7 @@ document.querySelectorAll(".game").forEach(tile => {
   });
 });
 
+  
 /* CAROUSEL */
 let i = 0;
 const slides = document.querySelectorAll(".slide");
