@@ -342,6 +342,7 @@ document.querySelectorAll(".game").forEach(tile => {
 /* RECENT GAMES SYSTEM (AUTO TRACK ON TILE CLICK) */
 document.querySelectorAll(".game").forEach(tile => {
   tile.addEventListener("click", () => {
+
     const name = tile.querySelector("div")?.innerText || "Unknown Game";
     const img = tile.querySelector("img")?.getAttribute("src") || "";
     const link = tile.getAttribute("href");
@@ -350,7 +351,11 @@ document.querySelectorAll(".game").forEach(tile => {
 
     recents = recents.filter(g => g.link !== link);
 
-    recents.push({ name, link, img });
+    recents.push({
+      name,
+      link: link.startsWith("/") ? link : "/games/" + link,
+      img: img.startsWith("/") ? img : "/games/" + img
+    });
 
     if (recents.length > 12) recents = recents.slice(-12);
 
