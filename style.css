@@ -227,7 +227,7 @@ body {
 /* SMP Banner (Sticky under topbar) */
 .smp-banner {
   position: sticky;
-  top: 60px; /* adjust if your topbar height is different */
+  top: 0px; /* adjust if your topbar height is different */
   z-index: 999;
 
   display: block;
