@@ -356,6 +356,32 @@ document.querySelectorAll(".game").forEach(tile => {
 });
 
 
+  const countdownEl = document.getElementById("countdown");
+
+const launchDate = new Date("May 9, 2026 15:00:00").getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = launchDate - now;
+
+  if (diff <= 0) {
+    countdownEl.innerText = "NOW LIVE!";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  countdownEl.innerText =
+    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
 /* SEARCH (WORKING VERSION) */
 document.getElementById("search").addEventListener("input", e => {
   const val = e.target.value.toLowerCase().trim();
@@ -380,6 +406,7 @@ document.getElementById("search").addEventListener("input", e => {
     return;
   }
 
+  
   // hide featured + carousel when searching
   carousel.style.display = "none";
   featuredTitle.style.display = "none";
