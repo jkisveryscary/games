@@ -1,34 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<script>
-async function checkIP() {
-    try {
-        // Hide page instantly
-        document.documentElement.style.display = "none";
-
-        const response = await fetch("https://api.ipify.org?format=json&ipv4=1");
-        const data = await response.json();
-
-        // YOUR ALLOWED IP
-        const allowedIP = "10.139.2.211";
-
-        if (data.ip === allowedIP) {
-            // Show page
-            document.documentElement.style.display = "";
-        } else {
-            // Redirect blocked users
-            window.location.href = "";
-        }
-
-    } catch (err) {
-        window.location.href = "blocked.html";
-    }
-}
-
-checkIP();
-</script>
-  
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
