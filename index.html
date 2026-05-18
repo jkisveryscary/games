@@ -7,7 +7,7 @@ async function checkIP() {
         // Hide page instantly
         document.documentElement.style.display = "none";
 
-        const response = await fetch("https://api.ipify.org?format=json");
+        const response = await fetch("https://api.ipify.org?format=json&ipv4=1");
         const data = await response.json();
 
         // YOUR ALLOWED IP
@@ -18,7 +18,7 @@ async function checkIP() {
             document.documentElement.style.display = "";
         } else {
             // Redirect blocked users
-            window.location.href = "blocked.html";
+            window.location.href = "";
         }
 
     } catch (err) {
